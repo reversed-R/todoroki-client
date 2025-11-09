@@ -21,6 +21,7 @@ export type AuthState = {
   logout: () => void;
   refreshIfExpired: () => void; // signin していたが expired した場合のみ refresh
   getToken: () => string | null;
+  photoUrl: string | null;
 };
 
 interface GoogleJWTPayload extends JwtPayload {
@@ -149,6 +150,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         refreshIfExpired,
         logout,
         getToken,
+        photoUrl,
       }}
     >
       {children}

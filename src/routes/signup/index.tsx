@@ -1,11 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/login/")({
+export const Route = createFileRoute("/signup/")({
   component: RouteComponent,
 });
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuth } from "@/context/auth";
+import { SignupForm } from "@/components/user/SignupForm";
 import { Button } from "@/components/common/Button";
 
 function RouteComponent() {
@@ -32,8 +33,8 @@ function RouteComponent() {
 
           login(token, refreshToken, photoUrl);
 
-          // ログイン成功時には/にリダイレクト
-          navigate({ to: "/" });
+          // // ログイン成功時には/にリダイレクト
+          // navigate({ to: "/" });
         } else {
           throw new Error("failed to sign in");
         }
@@ -46,32 +47,42 @@ function RouteComponent() {
   return (
     <main>
       <section>
-        <p>TodorokiはGoogleアカウントでサインインできます。</p>
+        <p>
+          Todorokiはsuggestionの追加などを行うためにユーザー登録が必要です。
+        </p>
+        <p>ユーザー登録にはGoogleアカウントでのログインが必要です。</p>
+        <p>
+          パブリックインターネットに公開しても良く、しかしownerには誰だかわかってもらえるくらいの、かわいらしいおなまえをつけましょう。
+        </p>
+      </section>
+
+      <section>
         <Button onClick={onClick} variant="primary">
           Googleアカウントでsignin
         </Button>
       </section>
 
       <section>
-        <p>新たにユーザー登録から行う場合はこちらから。</p>
-        <Button
-          onClick={() => {
-            navigate({ to: "/signup" });
+        <SignupForm
+          onSubmit={() => {
+            console.log("onSubmit");
           }}
-          variant="secondary"
-        >
-          signup
-        </Button>
+          onCancel={() => {
+            navigate({ to: "/" });
+          }}
+        />
       </section>
 
       <section>
+        <p>すでにユーザー登録がお済みの方はこちらからサインイン。</p>
+
         <Button
           onClick={() => {
-            navigate({ to: "/" });
+            navigate({ to: "/login" });
           }}
           variant="secondary"
         >
-          ホームに戻る
+          signin
         </Button>
       </section>
     </main>

@@ -1,0 +1,36 @@
+@use "@/styles/variables" as var;
+
+.button {
+  display: inline-block;
+  min-width: 120px;
+  padding: 8px 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.primary,
+.add {
+  color: #fff;
+  background: var.$grad-primary;
+  border: 0px;
+}
+
+.secondary {
+  color: #000;
+  background: #ddd;
+  border: 0px;
+}
+
+.add {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-right: 20px;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
