@@ -11,18 +11,18 @@ export function Header() {
       <h1>Todoroki</h1>
       {isAuthenticated ? (
         <>
-          <img src={photoUrl ? photoUrl : undefined} />
           <Button onClick={logout} variant="secondary">
             signout
           </Button>
+          <img src={photoUrl ? photoUrl : undefined} />
         </>
       ) : (
         <>
           <Button
             onClick={() => {
-              navigate({ to: "/login" });
+              navigate({ to: "/signin" });
             }}
-            variant="secondary"
+            variant="primary"
           >
             signin
           </Button>

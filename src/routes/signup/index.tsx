@@ -78,7 +78,7 @@ function RouteComponent() {
 
         <Button
           onClick={() => {
-            navigate({ to: "/login" });
+            navigate({ to: "/signin" });
           }}
           variant="secondary"
         >
