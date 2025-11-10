@@ -8,16 +8,14 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuth } from "@/context/auth";
 import { SignupForm } from "@/components/user/SignupForm";
 import { Button } from "@/components/common/Button";
+import type { IUserFormInput } from "@/types/user";
+import { client } from "@/lib/openapi";
 
 function RouteComponent() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
-
-  if (isAuthenticated) {
-    navigate({ to: "/" });
-  }
 
   const onClick = () => {
     signInWithPopup(auth, provider)
@@ -32,9 +30,6 @@ function RouteComponent() {
           const photoUrl = user.photoURL;
 
           login(token, refreshToken, photoUrl);
-
-          // // ログイン成功時には/にリダイレクト
-          // navigate({ to: "/" });
         } else {
           throw new Error("failed to sign in");
         }
@@ -43,6 +38,33 @@ function RouteComponent() {
         console.log(error);
       });
   };
+
+  const postUser = client.useMutation("post", "/users", {
+    onSuccess: () => {
+      console.log("create user succeeded");
+      navigate({ to: "/" });
+    },
+    onError: () => {
+      console.log("create user failed");
+    },
+  });
+
+  const onSubmit = (data: IUserFormInput) => {
+    if (isAuthenticated) {
+      postUser.mutate({
+        body: {
+          name: data.name,
+        },
+      });
+    } else {
+      console.log("user not verified");
+    }
+  };
+
+  // TODO: ユーザー登録を
+  // 1. Google アカウント認証
+  // 2. 情報登録
+  // というように段階化する
 
   return (
     <main>
@@ -64,9 +86,7 @@ function RouteComponent() {
 
       <section>
         <SignupForm
-          onSubmit={() => {
-            console.log("onSubmit");
-          }}
+          onSubmit={onSubmit}
           onCancel={() => {
             navigate({ to: "/" });
           }}
