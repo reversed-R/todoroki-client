@@ -9,7 +9,7 @@ import { useAuth } from "@/context/auth";
 import { SignupForm } from "@/components/user/SignupForm";
 import { Button } from "@/components/common/Button";
 import type { IUserFormInput } from "@/types/user";
-import { client } from "@/lib/openapi";
+import { $api } from "@/lib/openapi";
 
 function RouteComponent() {
   const provider = new GoogleAuthProvider();
@@ -38,7 +38,7 @@ function RouteComponent() {
       });
   };
 
-  const postUser = client.useMutation("post", "/users", {
+  const postUser = $api.client().useMutation("post", "/users", {
     onSuccess: () => {
       console.log("create user succeeded");
       navigate({ to: "/" });

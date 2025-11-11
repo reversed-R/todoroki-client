@@ -23,4 +23,23 @@ const authMiddleware: Middleware = {
 
 fetchClient.use(authMiddleware);
 
-export const client = createClient(fetchClient);
+const client = createClient(fetchClient);
+
+export const $api = {
+  client: (args?: { token?: string }) => {
+    if (args && args.token) {
+      const immediateAuthMiddleware: Middleware = {
+        onRequest({ request }) {
+          request.headers.set("Authorization", `Bearer ${args.token}`);
+
+          return request;
+        },
+      };
+
+      fetchClient.use(immediateAuthMiddleware);
+      return createClient(fetchClient);
+    } else {
+      return client;
+    }
+  },
+};

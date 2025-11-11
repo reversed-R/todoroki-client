@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Todoroki API
-  description: ""
+  description: ''
   license:
     name: MIT
     identifier: MIT
@@ -10,218 +10,252 @@ paths:
   /health:
     get:
       tags:
-        - health
+      - health
       operationId: checkHealth
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessResponse"
-        "500":
+                $ref: '#/components/schemas/SuccessResponse'
+        '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
       security:
-        - {}
+      - {}
   /todos:
     get:
       tags:
-        - todo
+      - todo
       operationId: getTodos
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Todo"
-        "400":
+                  $ref: '#/components/schemas/Todo'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "422":
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
       security:
-        - jwt_token: []
-        - nothing: []
+      - jwt_token: []
+      - nothing: []
     post:
       tags:
-        - todo
+      - todo
       operationId: postTodo
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Todo"
+              $ref: '#/components/schemas/Todo'
         required: true
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessResponse"
-        "400":
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "422":
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
       security:
-        - jwt_token: []
+      - jwt_token: []
   /todos/{todo_id}:
     patch:
       tags:
-        - todo
+      - todo
       operationId: patchTodoById
       parameters:
-        - name: todo_id
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: todo_id
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TodoUpdateCommand"
+              $ref: '#/components/schemas/TodoUpdateCommand'
         required: true
       responses:
-        "201":
+        '201':
           description: Updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessResponse"
-        "400":
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "422":
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
       security:
-        - jwt_token: []
+      - jwt_token: []
   /users:
     post:
       tags:
-        - user
+      - user
       operationId: postUser
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/UserRequest'
         required: true
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessResponse"
-        "400":
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "422":
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
       security:
-        - jwt_token: []
+      - jwt_token: []
+  /users/me:
+    get:
+      tags:
+      - user
+      operationId: getUserOwn
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - jwt_token: []
 components:
   schemas:
     ErrorResponse:
       type: object
       required:
-        - code
-        - message
+      - code
+      - message
       properties:
         code:
-          $ref: "#/components/schemas/ErrorResponseCode"
+          $ref: '#/components/schemas/ErrorResponseCode'
         message:
           type: string
     ErrorResponseCode:
       type: string
       enum:
-        - todo/not-found
-        - permission/denied
-        - todo/repository-internal-error
-        - datetime/invalid-format
-        - uuid/invalid-format
-        - user/repository-internal-error
-        - user-auth/token-verification-error
-        - user-auth/not-verified
+      - todo/not-found
+      - permission/denied
+      - todo/repository-internal-error
+      - datetime/invalid-format
+      - uuid/invalid-format
+      - user/repository-internal-error
+      - user-auth/token-verification-error
+      - user-auth/not-verified
     SuccessResponse:
       type: object
       required:
-        - message
+      - message
       properties:
         message:
           type: string
     Todo:
       type: object
       required:
-        - name
-        - description
-        - is_public
+      - name
+      - description
+      - is_public
       properties:
         alternative_name:
           type:
-            - string
-            - "null"
+          - string
+          - 'null'
         description:
           type: string
         is_public:
@@ -230,51 +264,67 @@ components:
           type: string
         scheduled_at:
           type:
-            - string
-            - "null"
+          - string
+          - 'null'
     TodoUpdateCommand:
       type: object
       properties:
         alternative_name:
           type:
-            - string
-            - "null"
+          - string
+          - 'null'
         description:
           type:
-            - string
-            - "null"
+          - string
+          - 'null'
         is_public:
           type:
-            - boolean
-            - "null"
+          - boolean
+          - 'null'
         name:
           type:
-            - string
-            - "null"
+          - string
+          - 'null'
         scheduled_at:
           type:
-            - string
-            - "null"
+          - string
+          - 'null'
         status:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoUpdateProgressStatus"
+          - type: 'null'
+          - $ref: '#/components/schemas/TodoUpdateProgressStatus'
     TodoUpdateProgressStatus:
       type: string
       enum:
-        - on-progress
-        - completed
-    User:
+      - on-progress
+      - completed
+    UserRequest:
       type: object
       required:
-        - name
+      - name
       properties:
         name:
           type: string
+    UserResponse:
+      type: object
+      required:
+      - id
+      - name
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        updated_at:
+          type: string
 tags:
-  - name: health
-    description: APIの死活チェック
-  - name: todo
-    description: Todo関連の操作
-  - name: user
-    description: ユーザー関連の操作
+- name: health
+  description: APIの死活チェック
+- name: todo
+  description: Todo関連の操作
+- name: user
+  description: ユーザー関連の操作

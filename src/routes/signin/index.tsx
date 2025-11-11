@@ -7,6 +7,7 @@ export const Route = createFileRoute("/signin/")({
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuth } from "@/context/auth";
 import { Button } from "@/components/common/Button";
+import { $api } from "@/lib/openapi";
 
 function RouteComponent() {
   const provider = new GoogleAuthProvider();
@@ -15,7 +16,7 @@ function RouteComponent() {
   const navigate = useNavigate();
 
   if (isAuthenticated) {
-    navigate({ to: "/" });
+    return <UserVerifier />;
   }
 
   const onClick = () => {
@@ -30,15 +31,13 @@ function RouteComponent() {
           const photoUrl = user.photoURL;
 
           login(token, refreshToken, photoUrl);
-
-          // ログイン成功時には/にリダイレクト
-          navigate({ to: "/" });
         } else {
           throw new Error("failed to sign in");
         }
       })
       .catch((error) => {
         console.log(error);
+        return;
       });
   };
 
@@ -72,6 +71,38 @@ function RouteComponent() {
         >
           ホームに戻る
         </Button>
+      </section>
+    </main>
+  );
+}
+
+function UserVerifier() {
+  const { token } = useAuth();
+  const navigate = useNavigate();
+
+  const { data, isError } = $api
+    .client({ token: token || "" })
+    .useSuspenseQuery("get", "/users/me");
+
+  if (isError) {
+    return (
+      <main>
+        <section>
+          <p>認証に失敗しました</p>
+        </section>
+      </main>
+    );
+  }
+
+  if (data) {
+    console.log("succeeded to verified", data);
+    navigate({ to: "/" });
+  }
+
+  return (
+    <main>
+      <section>
+        <p>認証中...</p>
       </section>
     </main>
   );
