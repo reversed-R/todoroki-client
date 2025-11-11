@@ -19,13 +19,12 @@ function RouteComponent() {
 
   const onClick = () => {
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
 
-        if (credential && credential.idToken) {
-          const token = credential.idToken;
-
+        if (credential) {
           const user = result.user;
+          const token: string = await user.getIdToken();
           const refreshToken: string = user.refreshToken;
           const photoUrl = user.photoURL;
 
