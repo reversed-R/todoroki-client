@@ -1,0 +1,29 @@
+@use "@/styles/variables" as *;
+
+.header {
+  background-color: $secondary-background;
+  margin: 0 auto;
+  top: 0;
+  position: fixed;
+  width: 100vw;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.appTitle {
+  color: #fff;
+}
+
+.accountContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.accountIcon {
+  width: 50px;
+  border-radius: 50%;
+}

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import logo from "../logo.svg";
 import "../App.css";
-import { Header } from "@/components/Header";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -10,7 +9,6 @@ export const Route = createFileRoute("/")({
 function App() {
   return (
     <div className="App">
-      <Header />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
