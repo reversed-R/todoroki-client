@@ -1,0 +1,102 @@
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.legend {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #0b1220;
+}
+
+.radioRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-radius: 6px;
+  transition: background 0.12s ease;
+}
+
+.radioRow:hover {
+  background: rgba(2, 6, 23, 0.03);
+}
+
+.radioInput {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb; /* modern browsers */
+  cursor: pointer;
+}
+
+.radioLabel {
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+}
+
+/* conditional textbox wrapper - hidden/visible with animation */
+.conditionalWrapper {
+  overflow: hidden;
+  transition:
+    max-height 240ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  margin-top: 10px;
+}
+
+.visible {
+  max-height: 160px; /* enough for the textbox */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* hidden class is optional but explicit */
+.hidden {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* textbox styles */
+.textboxWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.textboxLabel {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.textbox {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #e6e9ef;
+  font-size: 14px;
+  outline: none;
+  transition:
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+
+.textbox:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+/* small screens */
+@media (max-width: 420px) {
+  .form {
+    padding: 12px;
+  }
+  .radioRow {
+    padding: 6px 4px;
+  }
+}

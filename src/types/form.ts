@@ -1,1 +1,1 @@
-export interface IFormInput {}
+export interface IFormInput { }
