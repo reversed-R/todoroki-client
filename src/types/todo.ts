@@ -1,6 +1,8 @@
 import type { components } from "@/schema";
 import type { IFormInput } from "./form";
 
+export type Todo = components["schemas"]["Todo"];
+
 export type TodoRequest = components["schemas"]["Todo"];
 
 export interface ITodoCreateFormInput extends IFormInput {

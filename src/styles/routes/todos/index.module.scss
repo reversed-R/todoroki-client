@@ -1,0 +1,10 @@
+.container {
+  display: grid;
+  grid-template-columns: minmax(150px, 10vw) 1fr;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 0.9fr));
+  gap: 0.5em;
+}

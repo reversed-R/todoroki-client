@@ -1,6 +1,9 @@
+import { TodoCard } from "@/components/todo/TodoCard";
 import { useAuth } from "@/context/auth";
 import { $api } from "@/lib/openapi";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import styles from "@/styles/routes/todos/index.module.scss";
+import { Button } from "@/components/common/Button";
 
 export const Route = createFileRoute("/todos/")({
   component: RouteComponent,
@@ -9,6 +12,7 @@ export const Route = createFileRoute("/todos/")({
 function RouteComponent() {
   const { refreshIfExpired } = useAuth();
   refreshIfExpired();
+  const navigate = useNavigate();
 
   const { data: todos, isError } = $api
     .client()
@@ -16,22 +20,28 @@ function RouteComponent() {
 
   if (isError) {
     return (
-      <main>
-        <section>
-          <p>データを取得中...</p>
-        </section>
-      </main>
+      <section>
+        <p>データを取得中...</p>
+      </section>
     );
   }
 
   return (
-    <main>
-      {todos.map((t) => (
-        <section>
-          <h2>{t.name}</h2>
-          <p>{t.description}</p>
-        </section>
-      ))}
-    </main>
+    <div className={styles.container}>
+      <div>
+        <Button
+          onClick={() => {
+            navigate({ to: "/todos/new" });
+          }}
+        >
+          New Todo
+        </Button>
+      </div>
+      <div className={styles.gridContainer}>
+        {todos.map((t) => (
+          <TodoCard todo={t} />
+        ))}
+      </div>
+    </div>
   );
 }
