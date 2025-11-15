@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import styles from "./index.module.scss";
 import { Label } from "@/components/common/form/Label";
 import { TextBox } from "@/components/common/form/TextBox";
 import { Form } from "@/components/common/Form";
 import type { ITodoCreateFormInput } from "@/types/todo";
 import { ToggleButton } from "@/components/common/form/ToggleButton";
+import { TextArea } from "@/components/common/form/TextArea";
 
 export function TodoCreateForm({
   onSubmit,
@@ -41,17 +41,31 @@ export function TodoCreateForm({
         />
       </Label>
 
+      {/*
       <Label error={errors.description} label="概要">
         <TextBox
           {...register("description", {
             required: true,
           })}
           aria-invalid={!!errors.description}
+          height="6em"
+        />
+      </Label> */}
+
+      <Label error={errors.description} label="概要">
+        <TextArea
+          {...register("description", {
+            required: true,
+          })}
+          aria-invalid={!!errors.description}
+          height="6em"
         />
       </Label>
 
       <Label error={errors.description} label="公開設定">
-        <ToggleButton {...register("is_public")} />
+        <div>
+          <ToggleButton {...register("is_public")} />
+        </div>
       </Label>
 
       {!isPublic && (

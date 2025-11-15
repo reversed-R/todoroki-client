@@ -21,7 +21,7 @@ export function Form<T extends IFormInput>({
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       {children}
-      <div className={styles.button_container}>
+      <div className={styles.buttonContainer}>
         <Button onClick={onCancel} variant="secondary">
           キャンセル
         </Button>

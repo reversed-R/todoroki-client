@@ -1,4 +1,5 @@
 import { TodoCreateForm } from "@/components/todo/TodoCreateForm";
+import { useAuth } from "@/context/auth";
 import { $api } from "@/lib/openapi";
 import { newTodoRequest, type ITodoCreateFormInput } from "@/types/todo";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -8,6 +9,9 @@ export const Route = createFileRoute("/todos/new/")({
 });
 
 function RouteComponent() {
+  const { refreshIfExpired } = useAuth();
+  refreshIfExpired();
+
   const navigate = useNavigate();
 
   const postUser = $api.client().useMutation("post", "/todos", {

@@ -1,0 +1,48 @@
+@use "@/styles/variables" as var;
+
+.toggleWrapper {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 32px;
+}
+
+.toggleInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #484e5a;
+  border-radius: 999px;
+  transition: background-color 0.25s;
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    left: 2px; // ON では左に
+    bottom: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s;
+  }
+}
+
+/* --- チェック ON のとき --- */
+.toggleInput:checked + .slider {
+  background-color: var.$primary;
+}
+
+.toggleInput:checked + .slider::before {
+  transform: translateX(20px); // 右へ移動する幅
+}

@@ -12,7 +12,7 @@ interface Props extends LabelHTMLAttributes<HTMLLabelElement> {
 export function Label({ children, label, error, ...props }: Props) {
   return (
     <label {...props} className={styles.label}>
-      <p className={styles.label_text}>{label}</p>
+      <p className={styles.labelText}>{label}</p>
       {children}
       {error && (
         <Error>
