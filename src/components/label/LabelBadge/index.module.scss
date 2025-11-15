@@ -1,0 +1,8 @@
+@use "@/styles/variables" as var;
+
+.badge {
+  display: inline-block;
+  border-radius: 1em;
+  padding: 0.25em 1em;
+  white-space: nowrap;
+}

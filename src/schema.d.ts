@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/labels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLabels"];
+        put?: never;
+        post: operations["postLabel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/todos": {
         parameters: {
             query?: never;
@@ -93,16 +109,40 @@ export interface components {
             message: string;
         };
         /** @enum {string} */
-        ErrorResponseCode: "todo/not-found" | "permission/denied" | "todo/repository-internal-error" | "datetime/invalid-format" | "uuid/invalid-format" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified";
+        ErrorResponseCode: "todo/not-found" | "permission/denied" | "todo/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
+        LabelRequest: {
+            color?: string | null;
+            description: string;
+            name: string;
+        };
+        LabelResponse: {
+            color?: string | null;
+            created_at: string;
+            description: string;
+            id: string;
+            name: string;
+            updated_at: string;
+        };
         SuccessResponse: {
             message: string;
         };
-        Todo: {
+        TodoRequest: {
             alternative_name?: string | null;
             description: string;
             is_public: boolean;
             name: string;
             scheduled_at?: string | null;
+        };
+        TodoResponse: {
+            created_at: string;
+            deleted_at?: string | null;
+            description: string;
+            ended_at?: string | null;
+            id: string;
+            name: string;
+            scheduled_at?: string | null;
+            started_at?: string | null;
+            updated_at: string;
         };
         TodoUpdateCommand: {
             alternative_name?: string | null;
@@ -161,6 +201,104 @@ export interface operations {
             };
         };
     };
+    getLabels: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelResponse"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postLabel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LabelRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     getTodos: {
         parameters: {
             query?: never;
@@ -176,7 +314,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"][];
+                    "application/json": components["schemas"]["TodoResponse"][];
                 };
             };
             /** @description Bad Request */
@@ -217,7 +355,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Todo"];
+                "application/json": components["schemas"]["TodoRequest"];
             };
         };
         responses: {
