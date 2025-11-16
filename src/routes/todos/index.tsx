@@ -4,6 +4,7 @@ import { $api } from "@/lib/openapi";
 import { createFileRoute } from "@tanstack/react-router";
 import styles from "@/styles/routes/todos/index.module.scss";
 import { TodoMenuBar } from "@/components/todo/TodoMenuBar";
+import { NavigationBar } from "@/components/common/NavigationBar";
 
 export const Route = createFileRoute("/todos/")({
   component: RouteComponent,
@@ -30,13 +31,21 @@ function RouteComponent() {
   }
 
   return (
-    <div className={styles.container}>
-      <TodoMenuBar labels={labels} />
-      <div className={styles.gridContainer}>
-        {todos.map((t) => (
-          <TodoCard todo={t} />
-        ))}
+    <>
+      <NavigationBar
+        links={[
+          { label: "Todos", link: "/todos" },
+          { label: "Top", link: "/" },
+        ]}
+      />
+      <div className={styles.container}>
+        <TodoMenuBar labels={labels} />
+        <div className={styles.gridContainer}>
+          {todos.map((t) => (
+            <TodoCard todo={t} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
