@@ -138,11 +138,13 @@ export interface components {
             scheduled_at?: string | null;
         };
         TodoResponse: {
+            alternative_name?: string | null;
             created_at: string;
             deadlined_at?: string | null;
             description: string;
             ended_at?: string | null;
             id: string;
+            is_public: boolean;
             labels: components["schemas"]["LabelResponse"][];
             name: string;
             started_at?: string | null;

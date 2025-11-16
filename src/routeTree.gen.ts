@@ -14,7 +14,9 @@ import { Route as TodosIndexRouteImport } from './routes/todos/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
 import { Route as SigninIndexRouteImport } from './routes/signin/index'
 import { Route as TodosNewIndexRouteImport } from './routes/todos/new/index'
+import { Route as TodosTodo_idIndexRouteImport } from './routes/todos/$todo_id/index'
 import { Route as LabelsNewIndexRouteImport } from './routes/labels/new/index'
+import { Route as TodosTodo_idEditIndexRouteImport } from './routes/todos/$todo_id/edit/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,9 +43,19 @@ const TodosNewIndexRoute = TodosNewIndexRouteImport.update({
   path: '/todos/new/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TodosTodo_idIndexRoute = TodosTodo_idIndexRouteImport.update({
+  id: '/todos/$todo_id/',
+  path: '/todos/$todo_id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LabelsNewIndexRoute = LabelsNewIndexRouteImport.update({
   id: '/labels/new/',
   path: '/labels/new/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodosTodo_idEditIndexRoute = TodosTodo_idEditIndexRouteImport.update({
+  id: '/todos/$todo_id/edit/',
+  path: '/todos/$todo_id/edit/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -53,7 +65,9 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupIndexRoute
   '/todos': typeof TodosIndexRoute
   '/labels/new': typeof LabelsNewIndexRoute
+  '/todos/$todo_id': typeof TodosTodo_idIndexRoute
   '/todos/new': typeof TodosNewIndexRoute
+  '/todos/$todo_id/edit': typeof TodosTodo_idEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +75,9 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupIndexRoute
   '/todos': typeof TodosIndexRoute
   '/labels/new': typeof LabelsNewIndexRoute
+  '/todos/$todo_id': typeof TodosTodo_idIndexRoute
   '/todos/new': typeof TodosNewIndexRoute
+  '/todos/$todo_id/edit': typeof TodosTodo_idEditIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +86,9 @@ export interface FileRoutesById {
   '/signup/': typeof SignupIndexRoute
   '/todos/': typeof TodosIndexRoute
   '/labels/new/': typeof LabelsNewIndexRoute
+  '/todos/$todo_id/': typeof TodosTodo_idIndexRoute
   '/todos/new/': typeof TodosNewIndexRoute
+  '/todos/$todo_id/edit/': typeof TodosTodo_idEditIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,9 +98,19 @@ export interface FileRouteTypes {
     | '/signup'
     | '/todos'
     | '/labels/new'
+    | '/todos/$todo_id'
     | '/todos/new'
+    | '/todos/$todo_id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/signup' | '/todos' | '/labels/new' | '/todos/new'
+  to:
+    | '/'
+    | '/signin'
+    | '/signup'
+    | '/todos'
+    | '/labels/new'
+    | '/todos/$todo_id'
+    | '/todos/new'
+    | '/todos/$todo_id/edit'
   id:
     | '__root__'
     | '/'
@@ -90,7 +118,9 @@ export interface FileRouteTypes {
     | '/signup/'
     | '/todos/'
     | '/labels/new/'
+    | '/todos/$todo_id/'
     | '/todos/new/'
+    | '/todos/$todo_id/edit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -99,7 +129,9 @@ export interface RootRouteChildren {
   SignupIndexRoute: typeof SignupIndexRoute
   TodosIndexRoute: typeof TodosIndexRoute
   LabelsNewIndexRoute: typeof LabelsNewIndexRoute
+  TodosTodo_idIndexRoute: typeof TodosTodo_idIndexRoute
   TodosNewIndexRoute: typeof TodosNewIndexRoute
+  TodosTodo_idEditIndexRoute: typeof TodosTodo_idEditIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -139,11 +171,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TodosNewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/todos/$todo_id/': {
+      id: '/todos/$todo_id/'
+      path: '/todos/$todo_id'
+      fullPath: '/todos/$todo_id'
+      preLoaderRoute: typeof TodosTodo_idIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/labels/new/': {
       id: '/labels/new/'
       path: '/labels/new'
       fullPath: '/labels/new'
       preLoaderRoute: typeof LabelsNewIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/todos/$todo_id/edit/': {
+      id: '/todos/$todo_id/edit/'
+      path: '/todos/$todo_id/edit'
+      fullPath: '/todos/$todo_id/edit'
+      preLoaderRoute: typeof TodosTodo_idEditIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -155,7 +201,9 @@ const rootRouteChildren: RootRouteChildren = {
   SignupIndexRoute: SignupIndexRoute,
   TodosIndexRoute: TodosIndexRoute,
   LabelsNewIndexRoute: LabelsNewIndexRoute,
+  TodosTodo_idIndexRoute: TodosTodo_idIndexRoute,
   TodosNewIndexRoute: TodosNewIndexRoute,
+  TodosTodo_idEditIndexRoute: TodosTodo_idEditIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
