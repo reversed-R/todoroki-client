@@ -109,7 +109,7 @@ export interface components {
             message: string;
         };
         /** @enum {string} */
-        ErrorResponseCode: "todo/not-found" | "permission/denied" | "todo/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
+        ErrorResponseCode: "todo/not-found" | "label/not-found" | "permission/denied" | "todo/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
         LabelRequest: {
             color?: string | null;
             description: string;
@@ -126,21 +126,25 @@ export interface components {
         SuccessResponse: {
             message: string;
         };
+        TodoLabel: {
+            id: string;
+        };
         TodoRequest: {
             alternative_name?: string | null;
             description: string;
             is_public: boolean;
+            labels: components["schemas"]["TodoLabel"][];
             name: string;
             scheduled_at?: string | null;
         };
         TodoResponse: {
             created_at: string;
-            deleted_at?: string | null;
+            deadlined_at?: string | null;
             description: string;
             ended_at?: string | null;
             id: string;
+            labels: components["schemas"]["LabelResponse"][];
             name: string;
-            scheduled_at?: string | null;
             started_at?: string | null;
             updated_at: string;
         };

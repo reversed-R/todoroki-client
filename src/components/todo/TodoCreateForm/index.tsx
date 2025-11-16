@@ -5,6 +5,9 @@ import { Form } from "@/components/common/Form";
 import type { ITodoCreateFormInput } from "@/types/todo";
 import { ToggleButton } from "@/components/common/form/ToggleButton";
 import { TextArea } from "@/components/common/form/TextArea";
+import { CheckboxGroup } from "@/components/common/form/CheckBoxGroup";
+import { $api } from "@/lib/openapi";
+import { Checkbox } from "@/components/common/form/CheckBox";
 
 export function TodoCreateForm({
   onSubmit,
@@ -23,6 +26,8 @@ export function TodoCreateForm({
     mode: "onChange",
   });
 
+  const { data: labels } = $api.client().useSuspenseQuery("get", "/labels");
+
   const isPublic = watch("is_public");
 
   return (
@@ -40,17 +45,6 @@ export function TodoCreateForm({
           aria-invalid={!!errors.name}
         />
       </Label>
-
-      {/*
-      <Label error={errors.description} label="概要">
-        <TextBox
-          {...register("description", {
-            required: true,
-          })}
-          aria-invalid={!!errors.description}
-          height="6em"
-        />
-      </Label> */}
 
       <Label error={errors.description} label="概要">
         <TextArea
@@ -78,6 +72,14 @@ export function TodoCreateForm({
           />
         </Label>
       )}
+
+      <CheckboxGroup label="ラベル" error={errors.labels}>
+        {labels.map((l) => (
+          <Checkbox key={l.id} value={l.id} {...register("labels", {})}>
+            {l.name}
+          </Checkbox>
+        ))}
+      </CheckboxGroup>
     </Form>
   );
 }

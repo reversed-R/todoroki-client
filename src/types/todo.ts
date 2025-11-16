@@ -11,6 +11,7 @@ export interface ITodoCreateFormInput extends IFormInput {
   description: string;
   is_public: boolean;
   scheduled_at: Date | null;
+  labels: string[];
 }
 
 export function newTodoRequest({
@@ -19,6 +20,7 @@ export function newTodoRequest({
   description,
   is_public,
   scheduled_at,
+  labels,
 }: ITodoCreateFormInput): TodoRequest {
   return {
     name,
@@ -26,5 +28,6 @@ export function newTodoRequest({
     description,
     is_public,
     scheduled_at: scheduled_at?.toString(),
+    labels: labels.map((id) => ({ id })),
   };
 }

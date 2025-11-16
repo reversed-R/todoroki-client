@@ -13,3 +13,10 @@
 .description {
   margin: 0.2em;
 }
+
+.labelBadgesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5em 0;
+  gap: 0.5em;
+}
