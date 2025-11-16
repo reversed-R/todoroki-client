@@ -8,6 +8,7 @@ import { TextArea } from "@/components/common/form/TextArea";
 import { CheckboxGroup } from "@/components/common/form/CheckBoxGroup";
 import { $api } from "@/lib/openapi";
 import { Checkbox } from "@/components/common/form/CheckBox";
+import { LabelBadge } from "@/components/label/LabelBadge";
 
 export function TodoCreateForm({
   onSubmit,
@@ -73,10 +74,10 @@ export function TodoCreateForm({
         </Label>
       )}
 
-      <CheckboxGroup label="ラベル" error={errors.labels}>
+      <CheckboxGroup error={errors.labels} label="ラベル">
         {labels.map((l) => (
           <Checkbox key={l.id} value={l.id} {...register("labels", {})}>
-            {l.name}
+            <LabelBadge label={l} />
           </Checkbox>
         ))}
       </CheckboxGroup>

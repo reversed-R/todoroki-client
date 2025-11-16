@@ -1,0 +1,52 @@
+@use "@/styles/variables" as var;
+
+.checkbox {
+  padding: 0.25em;
+}
+
+.label {
+  gap: 0.5em;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* 枠のデザイン */
+.checkmark {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  display: inline-block;
+  border-radius: 4px;
+  position: relative;
+  margin-right: 8px;
+}
+
+/* チェックされたときの背景色 */
+.input:checked + .checkmark {
+  background-color: var.$primary;
+}
+
+/* チェックマーク */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* チェック時に表示 */
+.input:checked + .checkmark::after {
+  display: block;
+}

@@ -9,6 +9,7 @@ export function Checkbox({ children, ...props }: Props) {
     <div className={styles.checkbox}>
       <label className={styles.label}>
         <input type="checkbox" className={styles.input} {...props} />
+        <span className={styles.checkmark}></span>
         {children}
       </label>
     </div>
