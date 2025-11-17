@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TodosIndexRouteImport } from './routes/todos/index'
+import { Route as TodosDoitsIndexRouteImport } from './routes/todos-doits/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
 import { Route as SigninIndexRouteImport } from './routes/signin/index'
 import { Route as DoitsIndexRouteImport } from './routes/doits/index'
@@ -30,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const TodosIndexRoute = TodosIndexRouteImport.update({
   id: '/todos/',
   path: '/todos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodosDoitsIndexRoute = TodosDoitsIndexRouteImport.update({
+  id: '/todos-doits/',
+  path: '/todos-doits/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupIndexRoute = SignupIndexRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/doits': typeof DoitsIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
+  '/todos-doits': typeof TodosDoitsIndexRoute
   '/todos': typeof TodosIndexRoute
   '/doits/$doit_id': typeof DoitsDoit_idIndexRoute
   '/doits/new': typeof DoitsNewIndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/doits': typeof DoitsIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
+  '/todos-doits': typeof TodosDoitsIndexRoute
   '/todos': typeof TodosIndexRoute
   '/doits/$doit_id': typeof DoitsDoit_idIndexRoute
   '/doits/new': typeof DoitsNewIndexRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/doits/': typeof DoitsIndexRoute
   '/signin/': typeof SigninIndexRoute
   '/signup/': typeof SignupIndexRoute
+  '/todos-doits/': typeof TodosDoitsIndexRoute
   '/todos/': typeof TodosIndexRoute
   '/doits/$doit_id/': typeof DoitsDoit_idIndexRoute
   '/doits/new/': typeof DoitsNewIndexRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/doits'
     | '/signin'
     | '/signup'
+    | '/todos-doits'
     | '/todos'
     | '/doits/$doit_id'
     | '/doits/new'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/doits'
     | '/signin'
     | '/signup'
+    | '/todos-doits'
     | '/todos'
     | '/doits/$doit_id'
     | '/doits/new'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/doits/'
     | '/signin/'
     | '/signup/'
+    | '/todos-doits/'
     | '/todos/'
     | '/doits/$doit_id/'
     | '/doits/new/'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   DoitsIndexRoute: typeof DoitsIndexRoute
   SigninIndexRoute: typeof SigninIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
+  TodosDoitsIndexRoute: typeof TodosDoitsIndexRoute
   TodosIndexRoute: typeof TodosIndexRoute
   DoitsDoit_idIndexRoute: typeof DoitsDoit_idIndexRoute
   DoitsNewIndexRoute: typeof DoitsNewIndexRoute
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/todos'
       fullPath: '/todos'
       preLoaderRoute: typeof TodosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/todos-doits/': {
+      id: '/todos-doits/'
+      path: '/todos-doits'
+      fullPath: '/todos-doits'
+      preLoaderRoute: typeof TodosDoitsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup/': {
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   DoitsIndexRoute: DoitsIndexRoute,
   SigninIndexRoute: SigninIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
+  TodosDoitsIndexRoute: TodosDoitsIndexRoute,
   TodosIndexRoute: TodosIndexRoute,
   DoitsDoit_idIndexRoute: DoitsDoit_idIndexRoute,
   DoitsNewIndexRoute: DoitsNewIndexRoute,

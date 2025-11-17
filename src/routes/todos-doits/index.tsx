@@ -2,11 +2,12 @@ import { TodoCard } from "@/components/todo/TodoCard";
 import { useAuth } from "@/context/auth";
 import { $api } from "@/lib/openapi";
 import { createFileRoute } from "@tanstack/react-router";
-import styles from "@/styles/routes/todos/index.module.scss";
+import styles from "@/styles/routes/todos-doits/index.module.scss";
 import { TodoMenuBar } from "@/components/todo/TodoMenuBar";
 import { CommonNavigationBar } from "@/components/common/CommonNavigationBar";
+import { DoitCard } from "@/components/doit/DoitCard";
 
-export const Route = createFileRoute("/todos/")({
+export const Route = createFileRoute("/todos-doits/")({
   component: RouteComponent,
 });
 
@@ -18,11 +19,15 @@ function RouteComponent() {
     .client()
     .useSuspenseQuery("get", "/todos");
 
+  const { data: doits, isError: isDoitError } = $api
+    .client()
+    .useSuspenseQuery("get", "/doits");
+
   const { data: labels, isError: isLabelError } = $api
     .client()
     .useSuspenseQuery("get", "/labels");
 
-  if (isError && isLabelError) {
+  if (isError && isLabelError && isDoitError) {
     return (
       <section>
         <p>データの取得に失敗しました</p>
@@ -35,10 +40,21 @@ function RouteComponent() {
       <CommonNavigationBar />
       <div className={styles.container}>
         <TodoMenuBar labels={labels} />
-        <div className={styles.gridContainer}>
-          {todos.map((t) => (
-            <TodoCard todo={t} />
-          ))}
+        <div>
+          <h2 className={styles.heading}>Todo</h2>
+          <div className={styles.gridContainer}>
+            {todos.map((t) => (
+              <TodoCard todo={t} />
+            ))}
+          </div>
+        </div>
+        <div>
+          <h2 className={styles.heading}>Do it!</h2>
+          <div className={styles.doitGridContainer}>
+            {doits.map((d) => (
+              <DoitCard doit={d} />
+            ))}
+          </div>
         </div>
       </div>
     </>

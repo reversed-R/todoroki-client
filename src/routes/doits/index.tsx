@@ -2,9 +2,9 @@ import { useAuth } from "@/context/auth";
 import { $api } from "@/lib/openapi";
 import { createFileRoute } from "@tanstack/react-router";
 import styles from "@/styles/routes/todos/index.module.scss";
-import { NavigationBar } from "@/components/common/NavigationBar";
 import { DoitCard } from "@/components/doit/DoitCard";
 import { DoitMenuBar } from "@/components/doit/DoitMenuBar";
+import { CommonNavigationBar } from "@/components/common/CommonNavigationBar";
 
 export const Route = createFileRoute("/doits/")({
   component: RouteComponent,
@@ -32,12 +32,7 @@ function RouteComponent() {
 
   return (
     <>
-      <NavigationBar
-        links={[
-          { label: "Todo", link: "/todos" },
-          { label: "Do it!", link: "/doits" },
-        ]}
-      />
+      <CommonNavigationBar />
       <div className={styles.container}>
         <DoitMenuBar labels={labels} />
         <div className={styles.gridContainer}>
