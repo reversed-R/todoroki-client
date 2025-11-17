@@ -7,6 +7,122 @@ info:
     identifier: MIT
   version: 0.1.0
 paths:
+  /doits:
+    get:
+      tags:
+      - doit
+      operationId: getDoits
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DoitResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - jwt_token: []
+      - nothing: []
+    post:
+      tags:
+      - doit
+      operationId: postDoit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DoitRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - jwt_token: []
+  /doits/{doit_id}:
+    patch:
+      tags:
+      - doit
+      operationId: patchDoitById
+      parameters:
+      - name: doit_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DoitUpdateCommand'
+        required: true
+      responses:
+        '201':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - jwt_token: []
   /health:
     get:
       tags:
@@ -287,6 +403,100 @@ paths:
       - jwt_token: []
 components:
   schemas:
+    DoitLabel:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+    DoitRequest:
+      type: object
+      required:
+      - name
+      - description
+      - is_public
+      - labels
+      properties:
+        alternative_name:
+          type:
+          - string
+          - 'null'
+        deadlined_at:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        is_public:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/DoitLabel'
+        name:
+          type: string
+    DoitResponse:
+      type: object
+      required:
+      - id
+      - name
+      - is_public
+      - description
+      - labels
+      - created_at
+      - updated_at
+      - created_by
+      properties:
+        alternative_name:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: string
+        created_by:
+          type: string
+        deadlined_at:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        id:
+          type: string
+        is_public:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelResponse'
+        name:
+          type: string
+        updated_at:
+          type: string
+    DoitUpdateCommand:
+      type: object
+      properties:
+        alternative_name:
+          type:
+          - string
+          - 'null'
+        deadlined_at:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        is_public:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
     ErrorResponse:
       type: object
       required:
@@ -301,9 +511,11 @@ components:
       type: string
       enum:
       - todo/not-found
+      - doit/not-found
       - label/not-found
       - permission/denied
       - todo/repository-internal-error
+      - doit/repository-internal-error
       - label/repository-internal-error
       - user/repository-internal-error
       - user-auth/token-verification-error
@@ -492,6 +704,8 @@ tags:
   description: APIの死活チェック
 - name: todo
   description: Todo関連の操作
+- name: doit
+  description: Do it! 関連の操作
 - name: label
   description: ラベル関連の操作
 - name: user

@@ -1,12 +1,12 @@
-import { TodoCard } from "@/components/todo/TodoCard";
 import { useAuth } from "@/context/auth";
 import { $api } from "@/lib/openapi";
 import { createFileRoute } from "@tanstack/react-router";
 import styles from "@/styles/routes/todos/index.module.scss";
-import { TodoMenuBar } from "@/components/todo/TodoMenuBar";
 import { NavigationBar } from "@/components/common/NavigationBar";
+import { DoitCard } from "@/components/doit/DoitCard";
+import { DoitMenuBar } from "@/components/doit/DoitMenuBar";
 
-export const Route = createFileRoute("/todos/")({
+export const Route = createFileRoute("/doits/")({
   component: RouteComponent,
 });
 
@@ -14,9 +14,9 @@ function RouteComponent() {
   const { refreshIfExpired } = useAuth();
   refreshIfExpired();
 
-  const { data: todos, isError } = $api
+  const { data: doits, isError } = $api
     .client()
-    .useSuspenseQuery("get", "/todos");
+    .useSuspenseQuery("get", "/doits");
 
   const { data: labels, isError: isLabelError } = $api
     .client()
@@ -34,15 +34,15 @@ function RouteComponent() {
     <>
       <NavigationBar
         links={[
-          { label: "Todos", link: "/todos" },
+          { label: "Todo", link: "/todos" },
           { label: "Do it!", link: "/doits" },
         ]}
       />
       <div className={styles.container}>
-        <TodoMenuBar labels={labels} />
+        <DoitMenuBar labels={labels} />
         <div className={styles.gridContainer}>
-          {todos.map((t) => (
-            <TodoCard todo={t} />
+          {doits.map((d) => (
+            <DoitCard doit={d} />
           ))}
         </div>
       </div>

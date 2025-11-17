@@ -4,6 +4,38 @@
  */
 
 export interface paths {
+    "/doits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDoits"];
+        put?: never;
+        post: operations["postDoit"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/doits/{doit_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["patchDoitById"];
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -104,12 +136,42 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        DoitLabel: {
+            id: string;
+        };
+        DoitRequest: {
+            alternative_name?: string | null;
+            deadlined_at?: string | null;
+            description: string;
+            is_public: boolean;
+            labels: components["schemas"]["DoitLabel"][];
+            name: string;
+        };
+        DoitResponse: {
+            alternative_name?: string | null;
+            created_at: string;
+            created_by: string;
+            deadlined_at?: string | null;
+            description: string;
+            id: string;
+            is_public: boolean;
+            labels: components["schemas"]["LabelResponse"][];
+            name: string;
+            updated_at: string;
+        };
+        DoitUpdateCommand: {
+            alternative_name?: string | null;
+            deadlined_at?: string | null;
+            description?: string | null;
+            is_public?: boolean | null;
+            name?: string | null;
+        };
         ErrorResponse: {
             code: components["schemas"]["ErrorResponseCode"];
             message: string;
         };
         /** @enum {string} */
-        ErrorResponseCode: "todo/not-found" | "label/not-found" | "permission/denied" | "todo/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
+        ErrorResponseCode: "todo/not-found" | "doit/not-found" | "label/not-found" | "permission/denied" | "todo/repository-internal-error" | "doit/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
         LabelRequest: {
             color?: string | null;
             description: string;
@@ -178,6 +240,157 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    getDoits: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoitResponse"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    postDoit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DoitRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    patchDoitById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doit_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DoitUpdateCommand"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     checkHealth: {
         parameters: {
             query?: never;

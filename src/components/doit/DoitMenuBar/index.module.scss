@@ -1,0 +1,18 @@
+.container {
+  padding: 1em;
+}
+
+.labelsContainer {
+  padding: 0.5em 0;
+}
+
+.labelsHeading {
+  margin: 0.2em 0;
+}
+
+.labelBadgesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1em 0;
+  gap: 0.5em;
+}

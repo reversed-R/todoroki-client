@@ -13,10 +13,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TodosIndexRouteImport } from './routes/todos/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
 import { Route as SigninIndexRouteImport } from './routes/signin/index'
+import { Route as DoitsIndexRouteImport } from './routes/doits/index'
 import { Route as TodosNewIndexRouteImport } from './routes/todos/new/index'
 import { Route as TodosTodo_idIndexRouteImport } from './routes/todos/$todo_id/index'
 import { Route as LabelsNewIndexRouteImport } from './routes/labels/new/index'
+import { Route as DoitsNewIndexRouteImport } from './routes/doits/new/index'
+import { Route as DoitsDoit_idIndexRouteImport } from './routes/doits/$doit_id/index'
 import { Route as TodosTodo_idEditIndexRouteImport } from './routes/todos/$todo_id/edit/index'
+import { Route as DoitsDoit_idEditIndexRouteImport } from './routes/doits/$doit_id/edit/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -38,6 +42,11 @@ const SigninIndexRoute = SigninIndexRouteImport.update({
   path: '/signin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DoitsIndexRoute = DoitsIndexRouteImport.update({
+  id: '/doits/',
+  path: '/doits/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodosNewIndexRoute = TodosNewIndexRouteImport.update({
   id: '/todos/new/',
   path: '/todos/new/',
@@ -53,84 +62,127 @@ const LabelsNewIndexRoute = LabelsNewIndexRouteImport.update({
   path: '/labels/new/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DoitsNewIndexRoute = DoitsNewIndexRouteImport.update({
+  id: '/doits/new/',
+  path: '/doits/new/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoitsDoit_idIndexRoute = DoitsDoit_idIndexRouteImport.update({
+  id: '/doits/$doit_id/',
+  path: '/doits/$doit_id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodosTodo_idEditIndexRoute = TodosTodo_idEditIndexRouteImport.update({
   id: '/todos/$todo_id/edit/',
   path: '/todos/$todo_id/edit/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DoitsDoit_idEditIndexRoute = DoitsDoit_idEditIndexRouteImport.update({
+  id: '/doits/$doit_id/edit/',
+  path: '/doits/$doit_id/edit/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/doits': typeof DoitsIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
   '/todos': typeof TodosIndexRoute
+  '/doits/$doit_id': typeof DoitsDoit_idIndexRoute
+  '/doits/new': typeof DoitsNewIndexRoute
   '/labels/new': typeof LabelsNewIndexRoute
   '/todos/$todo_id': typeof TodosTodo_idIndexRoute
   '/todos/new': typeof TodosNewIndexRoute
+  '/doits/$doit_id/edit': typeof DoitsDoit_idEditIndexRoute
   '/todos/$todo_id/edit': typeof TodosTodo_idEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/doits': typeof DoitsIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
   '/todos': typeof TodosIndexRoute
+  '/doits/$doit_id': typeof DoitsDoit_idIndexRoute
+  '/doits/new': typeof DoitsNewIndexRoute
   '/labels/new': typeof LabelsNewIndexRoute
   '/todos/$todo_id': typeof TodosTodo_idIndexRoute
   '/todos/new': typeof TodosNewIndexRoute
+  '/doits/$doit_id/edit': typeof DoitsDoit_idEditIndexRoute
   '/todos/$todo_id/edit': typeof TodosTodo_idEditIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/doits/': typeof DoitsIndexRoute
   '/signin/': typeof SigninIndexRoute
   '/signup/': typeof SignupIndexRoute
   '/todos/': typeof TodosIndexRoute
+  '/doits/$doit_id/': typeof DoitsDoit_idIndexRoute
+  '/doits/new/': typeof DoitsNewIndexRoute
   '/labels/new/': typeof LabelsNewIndexRoute
   '/todos/$todo_id/': typeof TodosTodo_idIndexRoute
   '/todos/new/': typeof TodosNewIndexRoute
+  '/doits/$doit_id/edit/': typeof DoitsDoit_idEditIndexRoute
   '/todos/$todo_id/edit/': typeof TodosTodo_idEditIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/doits'
     | '/signin'
     | '/signup'
     | '/todos'
+    | '/doits/$doit_id'
+    | '/doits/new'
     | '/labels/new'
     | '/todos/$todo_id'
     | '/todos/new'
+    | '/doits/$doit_id/edit'
     | '/todos/$todo_id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/doits'
     | '/signin'
     | '/signup'
     | '/todos'
+    | '/doits/$doit_id'
+    | '/doits/new'
     | '/labels/new'
     | '/todos/$todo_id'
     | '/todos/new'
+    | '/doits/$doit_id/edit'
     | '/todos/$todo_id/edit'
   id:
     | '__root__'
     | '/'
+    | '/doits/'
     | '/signin/'
     | '/signup/'
     | '/todos/'
+    | '/doits/$doit_id/'
+    | '/doits/new/'
     | '/labels/new/'
     | '/todos/$todo_id/'
     | '/todos/new/'
+    | '/doits/$doit_id/edit/'
     | '/todos/$todo_id/edit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DoitsIndexRoute: typeof DoitsIndexRoute
   SigninIndexRoute: typeof SigninIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
   TodosIndexRoute: typeof TodosIndexRoute
+  DoitsDoit_idIndexRoute: typeof DoitsDoit_idIndexRoute
+  DoitsNewIndexRoute: typeof DoitsNewIndexRoute
   LabelsNewIndexRoute: typeof LabelsNewIndexRoute
   TodosTodo_idIndexRoute: typeof TodosTodo_idIndexRoute
   TodosNewIndexRoute: typeof TodosNewIndexRoute
+  DoitsDoit_idEditIndexRoute: typeof DoitsDoit_idEditIndexRoute
   TodosTodo_idEditIndexRoute: typeof TodosTodo_idEditIndexRoute
 }
 
@@ -164,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/doits/': {
+      id: '/doits/'
+      path: '/doits'
+      fullPath: '/doits'
+      preLoaderRoute: typeof DoitsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/todos/new/': {
       id: '/todos/new/'
       path: '/todos/new'
@@ -185,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabelsNewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/doits/new/': {
+      id: '/doits/new/'
+      path: '/doits/new'
+      fullPath: '/doits/new'
+      preLoaderRoute: typeof DoitsNewIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doits/$doit_id/': {
+      id: '/doits/$doit_id/'
+      path: '/doits/$doit_id'
+      fullPath: '/doits/$doit_id'
+      preLoaderRoute: typeof DoitsDoit_idIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/todos/$todo_id/edit/': {
       id: '/todos/$todo_id/edit/'
       path: '/todos/$todo_id/edit'
@@ -192,17 +265,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TodosTodo_idEditIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/doits/$doit_id/edit/': {
+      id: '/doits/$doit_id/edit/'
+      path: '/doits/$doit_id/edit'
+      fullPath: '/doits/$doit_id/edit'
+      preLoaderRoute: typeof DoitsDoit_idEditIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DoitsIndexRoute: DoitsIndexRoute,
   SigninIndexRoute: SigninIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
   TodosIndexRoute: TodosIndexRoute,
+  DoitsDoit_idIndexRoute: DoitsDoit_idIndexRoute,
+  DoitsNewIndexRoute: DoitsNewIndexRoute,
   LabelsNewIndexRoute: LabelsNewIndexRoute,
   TodosTodo_idIndexRoute: TodosTodo_idIndexRoute,
   TodosNewIndexRoute: TodosNewIndexRoute,
+  DoitsDoit_idEditIndexRoute: DoitsDoit_idEditIndexRoute,
   TodosTodo_idEditIndexRoute: TodosTodo_idEditIndexRoute,
 }
 export const routeTree = rootRouteImport
