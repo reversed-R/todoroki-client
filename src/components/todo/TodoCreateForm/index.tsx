@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Label } from "@/components/common/form/Label";
 import { TextBox } from "@/components/common/form/TextBox";
 import { Form } from "@/components/common/Form";
@@ -9,6 +9,8 @@ import { CheckboxGroup } from "@/components/common/form/CheckBoxGroup";
 import { $api } from "@/lib/openapi";
 import { Checkbox } from "@/components/common/form/CheckBox";
 import { LabelBadge } from "@/components/label/LabelBadge";
+import { Button } from "@/components/common/Button";
+import { TodoScheduleSelector } from "../TodoScheduleSelector";
 
 export function TodoCreateForm({
   onSubmit,
@@ -17,19 +19,27 @@ export function TodoCreateForm({
   onSubmit: (data: ITodoCreateFormInput) => void;
   onCancel: () => void;
 }) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<ITodoCreateFormInput>({
+  const form = useForm<ITodoCreateFormInput>({
     defaultValues: {},
     mode: "onChange",
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    watch,
+  } = form;
+
   const { data: labels } = $api.client().useSuspenseQuery("get", "/labels");
 
   const isPublic = watch("is_public");
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "schedules" as never,
+  });
 
   return (
     <Form<ITodoCreateFormInput>
@@ -57,7 +67,7 @@ export function TodoCreateForm({
         />
       </Label>
 
-      <Label error={errors.description} label="公開設定">
+      <Label error={errors.is_public} label="公開設定">
         <div>
           <ToggleButton {...register("is_public")} />
         </div>
@@ -81,6 +91,28 @@ export function TodoCreateForm({
           </Checkbox>
         ))}
       </CheckboxGroup>
+
+      <Label error={errors.schedules} label="スケジュール">
+        <Button
+          variant="add"
+          onClick={() =>
+            append({
+              interval: "once",
+            })
+          }
+        >
+          追加
+        </Button>
+
+        {fields.map((_, index) => (
+          <TodoScheduleSelector
+            key={index}
+            form={form}
+            index={index}
+            remove={remove}
+          />
+        ))}
+      </Label>
     </Form>
   );
 }

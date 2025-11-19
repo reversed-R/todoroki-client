@@ -37,7 +37,7 @@ function RouteComponent() {
         <TodoMenuBar labels={labels} />
         <div className={styles.gridContainer}>
           {todos.map((t) => (
-            <TodoCard todo={t} />
+            <TodoCard key={t.id} todo={t} />
           ))}
         </div>
       </div>

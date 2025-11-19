@@ -37,7 +37,7 @@ function RouteComponent() {
         <DoitMenuBar labels={labels} />
         <div className={styles.gridContainer}>
           {doits.map((d) => (
-            <DoitCard doit={d} />
+            <DoitCard key={d.id} doit={d} />
           ))}
         </div>
       </div>

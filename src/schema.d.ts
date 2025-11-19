@@ -198,6 +198,7 @@ export interface components {
             labels: components["schemas"]["TodoLabel"][];
             name: string;
             scheduled_at?: string | null;
+            schedules: components["schemas"]["TodoScheduleRequest"][];
         };
         TodoResponse: {
             alternative_name?: string | null;
@@ -209,8 +210,23 @@ export interface components {
             is_public: boolean;
             labels: components["schemas"]["LabelResponse"][];
             name: string;
+            schedules: components["schemas"]["TodoScheduleResponse"][];
             started_at?: string | null;
             updated_at: string;
+        };
+        /** @enum {string} */
+        TodoScheduleIntervalRequest: "once" | "daily" | "weekly" | "monthly";
+        /** @enum {string} */
+        TodoScheduleIntervalResponse: "once" | "daily" | "weekly" | "monthly";
+        TodoScheduleRequest: {
+            ends_at: string;
+            interval: components["schemas"]["TodoScheduleIntervalRequest"];
+            starts_at: string;
+        };
+        TodoScheduleResponse: {
+            ends_at: string;
+            interval: components["schemas"]["TodoScheduleIntervalResponse"];
+            starts_at: string;
         };
         TodoUpdateCommand: {
             alternative_name?: string | null;

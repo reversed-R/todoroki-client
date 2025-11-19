@@ -44,7 +44,7 @@ function RouteComponent() {
           <h2 className={styles.heading}>Todo</h2>
           <div className={styles.gridContainer}>
             {todos.map((t) => (
-              <TodoCard todo={t} />
+              <TodoCard key={t.id} todo={t} />
             ))}
           </div>
         </div>
@@ -52,7 +52,7 @@ function RouteComponent() {
           <h2 className={styles.heading}>Do it!</h2>
           <div className={styles.doitGridContainer}>
             {doits.map((d) => (
-              <DoitCard doit={d} />
+              <DoitCard key={d.id} doit={d} />
             ))}
           </div>
         </div>

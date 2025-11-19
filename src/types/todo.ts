@@ -1,5 +1,6 @@
 import type { components } from "@/schema";
 import type { IFormInput } from "./form";
+import type { Dayjs } from "dayjs";
 
 export type Todo = components["schemas"]["TodoResponse"];
 
@@ -14,6 +15,7 @@ export interface ITodoCreateFormInput extends IFormInput {
   is_public: boolean;
   scheduled_at: Date | null;
   labels: string[];
+  schedules: TodoScheduleFormInput[];
 }
 
 export function newTodoRequest({
@@ -23,6 +25,7 @@ export function newTodoRequest({
   is_public,
   scheduled_at,
   labels,
+  schedules,
 }: ITodoCreateFormInput): TodoRequest {
   return {
     name,
@@ -31,6 +34,7 @@ export function newTodoRequest({
     is_public,
     scheduled_at: scheduled_at?.toString(),
     labels: labels.map((id) => ({ id })),
+    schedules: schedules.map(todoScheduleFormInputToRequest),
   };
 }
 
@@ -65,4 +69,75 @@ export function newTodoUpdateRequest({
     is_public,
     scheduled_at: scheduled_at?.toString(),
   };
+}
+
+export type TodoScheduleInterval = "once" | "daily" | "weekly" | "monthly";
+
+export type TodoScheduleFormInput = {
+  interval: TodoScheduleInterval;
+  onceStart?: Dayjs;
+  onceEnd?: Dayjs;
+  dailyStart?: Dayjs;
+  dailyEnd?: Dayjs;
+  weeklyStart?: { weekday: number; time: Dayjs };
+  weeklyEnd?: { weekday: number; time: Dayjs };
+  monthlyStart?: { day: number; time: Dayjs };
+  monthlyEnd?: { day: number; time: Dayjs };
+};
+
+function toRFC3339(datePart: string, time: Dayjs) {
+  console.log("datePart", datePart);
+  console.log("time", time);
+
+  const hh = time.hour().toString().padStart(2, "0");
+  const mm = time.minute().toString().padStart(2, "0");
+  return new Date(`${datePart}T${hh}:${mm}:00Z`).toISOString();
+}
+
+type TodoScheduleRequest = components["schemas"]["TodoScheduleRequest"];
+
+export function todoScheduleFormInputToRequest(
+  data: TodoScheduleFormInput,
+): TodoScheduleRequest {
+  switch (data.interval) {
+    case "once":
+      return {
+        interval: data.interval,
+        starts_at: data.onceStart!.toISOString(),
+        ends_at: data.onceEnd!.toISOString(),
+      };
+
+    case "daily":
+      return {
+        interval: data.interval,
+        starts_at: toRFC3339("1970-01-01", data.dailyStart!),
+        ends_at: toRFC3339("1970-01-01", data.dailyEnd!),
+      };
+
+    case "weekly":
+      return {
+        interval: data.interval,
+        starts_at: toRFC3339(
+          `1970-01-${(4 + Number(data.weeklyStart!.weekday)).toString().padStart(2, "0")}`,
+          data.weeklyStart!.time,
+        ),
+        ends_at: toRFC3339(
+          `1970-01-${(4 + Number(data.weeklyEnd!.weekday)).toString().padStart(2, "0")}`,
+          data.weeklyEnd!.time,
+        ),
+      };
+
+    case "monthly":
+      return {
+        interval: data.interval,
+        starts_at: toRFC3339(
+          `1970-01-${data.monthlyStart!.day.toString().padStart(2, "0")}`,
+          data.monthlyStart!.time,
+        ),
+        ends_at: toRFC3339(
+          `1970-01-${data.monthlyEnd!.day.toString().padStart(2, "0")}`,
+          data.monthlyEnd!.time,
+        ),
+      };
+  }
 }
