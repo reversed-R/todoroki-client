@@ -60,37 +60,33 @@ function RouteComponent() {
     }
   };
 
-  // TODO: ユーザー登録を
-  // 1. Google アカウント認証
-  // 2. 情報登録
-  // というように段階化する
-
   return (
     <main>
       <section>
-        <p>
-          Todorokiはsuggestionの追加などを行うためにユーザー登録が必要です。
-        </p>
-        <p>ユーザー登録にはGoogleアカウントでのログインが必要です。</p>
-        <p>
-          パブリックインターネットに公開しても良く、しかしownerには誰だかわかってもらえるくらいの、かわいらしいおなまえをつけましょう。
-        </p>
+        <p>TodorokiはDo it!の追加などを行うためにユーザー登録が必要です。</p>
       </section>
 
-      <section>
-        <Button onClick={onClick} variant="primary">
-          Googleアカウントでsignin
-        </Button>
-      </section>
+      {!isAuthenticated ? (
+        <section>
+          <p>ユーザー登録にはGoogleアカウントでのログインが必要です。</p>
+          <Button onClick={onClick} variant="primary">
+            Googleアカウントでsignin
+          </Button>
+        </section>
+      ) : (
+        <section>
+          <p>
+            パブリックインターネットに公開しても良く、しかしownerには誰だかわかってもらえるくらいの、かわいらしいおなまえをつけましょう。
+          </p>
 
-      <section>
-        <SignupForm
-          onSubmit={onSubmit}
-          onCancel={() => {
-            navigate({ to: "/" });
-          }}
-        />
-      </section>
+          <SignupForm
+            onSubmit={onSubmit}
+            onCancel={() => {
+              navigate({ to: "/" });
+            }}
+          />
+        </section>
+      )}
 
       <section>
         <p>すでにユーザー登録がお済みの方はこちらからサインイン。</p>
