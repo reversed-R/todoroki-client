@@ -2,6 +2,8 @@ import { Icon } from "@iconify/react";
 import styles from "./index.module.scss";
 import type { Todo } from "@/types/todo";
 import { $api } from "@/lib/openapi";
+import { useAuth } from "@/context/auth";
+import { isStrongerThanOrEqualsTo } from "@/types/user";
 
 export function TodoProgressButton({ todo }: { todo: Todo }) {
   const state = todo.ended_at
@@ -19,22 +21,41 @@ export function TodoProgressButton({ todo }: { todo: Todo }) {
     },
   });
 
+  const { userRole } = useAuth();
+
+  const onClickeNotYetStarted = isStrongerThanOrEqualsTo(userRole, "owner")
+    ? () => {
+        patchTodo.mutate({
+          params: {
+            path: {
+              todo_id: todo.id,
+            },
+          },
+          body: { status: "on-progress" },
+        });
+      }
+    : () => {};
+
+  const onClickeOnProgress = isStrongerThanOrEqualsTo(userRole, "owner")
+    ? () => {
+        patchTodo.mutate({
+          params: {
+            path: {
+              todo_id: todo.id,
+            },
+          },
+          body: { status: "completed" },
+        });
+      }
+    : () => {};
+
   switch (state) {
     case "not-yet-started":
       return (
         <Icon
           icon="material-symbols:play-circle-rounded"
           className={styles.button}
-          onClick={() => {
-            patchTodo.mutate({
-              params: {
-                path: {
-                  todo_id: todo.id,
-                },
-              },
-              body: { status: "on-progress" },
-            });
-          }}
+          onClick={onClickeNotYetStarted}
         />
       );
 
@@ -43,16 +64,7 @@ export function TodoProgressButton({ todo }: { todo: Todo }) {
         <Icon
           icon="material-symbols:fast-forward-rounded"
           className={styles.button}
-          onClick={() => {
-            patchTodo.mutate({
-              params: {
-                path: {
-                  todo_id: todo.id,
-                },
-              },
-              body: { status: "completed" },
-            });
-          }}
+          onClick={onClickeOnProgress}
         />
       );
 

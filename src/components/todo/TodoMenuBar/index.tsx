@@ -4,6 +4,7 @@ import type { Label } from "@/types/label";
 import { useNavigate } from "@tanstack/react-router";
 import styles from "./index.module.scss";
 import { MenuBar } from "@/components/common/MenuBar";
+import { UserRoleGuard } from "@/components/user/UserRoleGuard";
 
 type Props = {
   labels: Label[];
@@ -15,13 +16,16 @@ export function TodoMenuBar({ labels }: Props) {
   return (
     <MenuBar width={200}>
       <div>
-        <Button
-          onClick={() => {
-            navigate({ to: "/todos/new" });
-          }}
-        >
-          New Todo
-        </Button>
+        <UserRoleGuard>
+          <Button
+            onClick={() => {
+              navigate({ to: "/todos/new" });
+            }}
+          >
+            New Todo
+          </Button>
+        </UserRoleGuard>
+
         <section className={styles.labelsContainer}>
           <h2 className={styles.labelsHeading}>ラベル一覧</h2>
           <div className={styles.labelBadgesContainer}>
@@ -30,13 +34,16 @@ export function TodoMenuBar({ labels }: Props) {
             ))}
           </div>
         </section>
-        <Button
-          onClick={() => {
-            navigate({ to: "/labels/new" });
-          }}
-        >
-          New Label
-        </Button>
+
+        <UserRoleGuard>
+          <Button
+            onClick={() => {
+              navigate({ to: "/labels/new" });
+            }}
+          >
+            New Label
+          </Button>
+        </UserRoleGuard>
       </div>
     </MenuBar>
   );

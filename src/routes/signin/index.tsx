@@ -77,7 +77,7 @@ function RouteComponent() {
 }
 
 function UserVerifier() {
-  const { token } = useAuth();
+  const { token, setUser } = useAuth();
   const navigate = useNavigate();
 
   const { data, isError } = $api
@@ -95,6 +95,7 @@ function UserVerifier() {
   }
 
   if (data) {
+    setUser(data);
     console.log("succeeded to verified", data);
     navigate({ to: "/" });
   }

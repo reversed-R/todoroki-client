@@ -14,7 +14,7 @@ import { $api } from "@/lib/openapi";
 function RouteComponent() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, login, setUser } = useAuth();
   const navigate = useNavigate();
 
   const onClick = () => {
@@ -40,6 +40,9 @@ function RouteComponent() {
 
   const postUser = $api.client().useMutation("post", "/users", {
     onSuccess: () => {
+      const { data } = $api.client().useSuspenseQuery("get", "/users/me");
+      setUser(data);
+
       console.log("create user succeeded");
       navigate({ to: "/" });
     },

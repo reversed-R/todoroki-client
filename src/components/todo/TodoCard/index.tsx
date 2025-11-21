@@ -4,13 +4,16 @@ import { LabelBadge } from "@/components/label/LabelBadge";
 import { TodoProgressButton } from "../TodoProgressButton";
 import { TodoEditButton } from "../TodoEditButton";
 import { TodoDetailButton } from "../TodoDetailButton";
+import { UserRoleGuard } from "@/components/user/UserRoleGuard";
 
 export function TodoCard({ todo }: { todo: Todo }) {
   return (
     <section className={styles.card}>
       <div className={styles.links}>
         <TodoProgressButton todo={todo} />
-        <TodoEditButton todoId={todo.id} />
+        <UserRoleGuard>
+          <TodoEditButton todoId={todo.id} />
+        </UserRoleGuard>
         <TodoDetailButton todoId={todo.id} />
       </div>
       <h2 className={styles.name}>

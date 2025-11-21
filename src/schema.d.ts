@@ -171,7 +171,7 @@ export interface components {
             message: string;
         };
         /** @enum {string} */
-        ErrorResponseCode: "todo/not-found" | "doit/not-found" | "label/not-found" | "permission/denied" | "todo/repository-internal-error" | "doit/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
+        ErrorResponseCode: "todo/not-found" | "doit/not-found" | "label/not-found" | "permission/denied" | "todo/repository-internal-error" | "doit/repository-internal-error" | "label/repository-internal-error" | "user/repository-internal-error" | "user-auth/token-verification-error" | "user-auth/not-verified" | "user/not-found" | "user/already-exists" | "datetime/invalid-format" | "uuid/invalid-format" | "color/invalid-format";
         LabelRequest: {
             color?: string | null;
             description: string;
@@ -245,8 +245,11 @@ export interface components {
             created_at: string;
             id: string;
             name: string;
+            role: components["schemas"]["UserRoleResponse"];
             updated_at: string;
         };
+        /** @enum {string} */
+        UserRoleResponse: "owner" | "contributor";
     };
     responses: never;
     parameters: never;
@@ -751,7 +754,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponse"][];
+                    "application/json": components["schemas"]["UserResponse"];
                 };
             };
             /** @description Bad Request */

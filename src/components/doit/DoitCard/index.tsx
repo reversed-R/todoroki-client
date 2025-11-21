@@ -3,12 +3,15 @@ import { LabelBadge } from "@/components/label/LabelBadge";
 import type { Doit } from "@/types/doit";
 import { DoitEditButton } from "../DoitEditButton";
 import { DoitDetailButton } from "../DoitDetailButton";
+import { UserRoleGuard } from "@/components/user/UserRoleGuard";
 
 export function DoitCard({ doit }: { doit: Doit }) {
   return (
     <section className={styles.card}>
       <div className={styles.links}>
-        <DoitEditButton doitId={doit.id} />
+        <UserRoleGuard role="contributor">
+          <DoitEditButton doitId={doit.id} />
+        </UserRoleGuard>
         <DoitDetailButton doitId={doit.id} />
       </div>
       <h2 className={styles.name}>

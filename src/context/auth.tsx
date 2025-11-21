@@ -12,7 +12,9 @@ import {
   JWT_ACCESS_TOKEN_KEY,
   JWT_REFRESH_TOKEN_KEY,
   JWT_PHOTO_URL_KEY,
+  APP_USER_ROLE_KEY,
 } from "@/lib/consts";
+import type { User, UserRole } from "@/types/user";
 
 export type AuthState = {
   isAuthenticated: boolean;
@@ -22,6 +24,8 @@ export type AuthState = {
   refreshIfExpired: () => void; // signin していたが expired した場合のみ refresh
   getToken: () => string | null;
   photoUrl: string | null;
+  setUser: (user: User) => void;
+  userRole: UserRole | null;
 };
 
 interface GoogleJWTPayload extends JwtPayload {
@@ -51,6 +55,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [photoUrl, setPhotoUrl] = useState<string | null>(
     localStorage.getItem(JWT_PHOTO_URL_KEY),
+  );
+
+  const [userRole, setUserRole] = useState<UserRole | null>(
+    (() => {
+      switch (localStorage.getItem(APP_USER_ROLE_KEY)) {
+        case "owner":
+          return "owner";
+        case "contributor":
+          return "contributor";
+        default:
+          return null;
+      }
+    })(),
   );
 
   useEffect(() => {
@@ -90,7 +107,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       localStorage.removeItem(JWT_PHOTO_URL_KEY);
     }
-  }, [refreshToken]);
+  }, [photoUrl]);
+
+  useEffect(() => {
+    if (userRole) {
+      localStorage.setItem(APP_USER_ROLE_KEY, userRole);
+    } else {
+      localStorage.removeItem(APP_USER_ROLE_KEY);
+    }
+  }, [userRole]);
 
   const login = (
     token: string,
@@ -103,6 +128,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setExpiresAt(expiration);
     setRefreshToken(refreshToken);
     setPhotoUrl(photoUrl);
+  };
+
+  const setUser = (user: User) => {
+    setUserRole(user.role);
   };
 
   const refreshIfExpired = async () => {
@@ -133,6 +162,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setExpiresAt(null);
     setRefreshToken(null);
     setPhotoUrl(null);
+    setUserRole(null);
   };
 
   const getToken = () => token;
@@ -151,6 +181,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         logout,
         getToken,
         photoUrl,
+        setUser,
+        userRole,
       }}
     >
       {children}
