@@ -1,14 +1,16 @@
 import styles from "./index.module.scss";
 import { LabelBadge } from "@/components/label/LabelBadge";
-import { Button } from "@/components/common/Button";
-import { useNavigate } from "@tanstack/react-router";
 import type { Doit } from "@/types/doit";
+import { DoitEditButton } from "../DoitEditButton";
+import { DoitDetailButton } from "../DoitDetailButton";
 
 export function DoitCard({ doit }: { doit: Doit }) {
-  const navigate = useNavigate();
-
   return (
     <section className={styles.card}>
+      <div className={styles.links}>
+        <DoitEditButton doitId={doit.id} />
+        <DoitDetailButton doitId={doit.id} />
+      </div>
       <h2 className={styles.name}>
         {doit.name +
           (doit.alternative_name && doit.alternative_name !== doit.name
@@ -21,14 +23,6 @@ export function DoitCard({ doit }: { doit: Doit }) {
           <LabelBadge key={l.id} label={l} />
         ))}
       </div>
-      <Button
-        onClick={() => {
-          navigate({ to: `/doits/${doit.id}/edit` });
-        }}
-        variant={"secondary"}
-      >
-        更新
-      </Button>
     </section>
   );
 }
