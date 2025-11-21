@@ -29,6 +29,7 @@
     "react-hook-form": "^7.66.0"
   },
   "devDependencies": {
+    "@iconify/react": "^6.0.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/node": "^22.10.2",

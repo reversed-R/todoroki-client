@@ -4,6 +4,8 @@ import type { Dayjs } from "dayjs";
 
 export type Todo = components["schemas"]["TodoResponse"];
 
+export type TodoSchedule = components["schemas"]["TodoScheduleResponse"];
+
 export type TodoRequest = components["schemas"]["TodoRequest"];
 
 export type TodoUpdateRequest = components["schemas"]["TodoUpdateCommand"];
