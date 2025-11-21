@@ -15,6 +15,7 @@ export function NavigationBar({ links }: Props) {
         {links.map((l) => (
           <li
             className={l.link === curretnPath ? styles.selectedLi : styles.li}
+            key={l.link}
           >
             <a href={l.link} className={styles.a}>
               {l.label}

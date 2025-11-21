@@ -9,7 +9,14 @@ export function Header() {
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.appTitle}>Todoroki</h1>
+      <div className={styles.appTitleContainer}>
+        <h1 className={styles.appTitle}>
+          <a href="/todos" className={styles.appTitleLink}>
+            Todoroki
+          </a>
+        </h1>
+      </div>
+
       {isAuthenticated ? (
         <div className={styles.accountContainer}>
           <Button onClick={logout} variant="secondary">
