@@ -84,7 +84,7 @@ export function TodoCreateForm({
         </Label>
       )}
 
-      <CheckboxGroup error={errors.labels} label="ラベル">
+      <CheckboxGroup label="ラベル">
         {labels.map((l) => (
           <Checkbox key={l.id} value={l.id} {...register("labels", {})}>
             <LabelBadge label={l} />
@@ -92,7 +92,7 @@ export function TodoCreateForm({
         ))}
       </CheckboxGroup>
 
-      <Label error={errors.schedules} label="スケジュール">
+      <Label label="スケジュール">
         <Button
           variant="add"
           onClick={() =>

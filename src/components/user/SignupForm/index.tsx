@@ -1,6 +1,4 @@
 import { useForm } from "react-hook-form";
-import styles from "./index.module.scss";
-import type { components } from "@/schema";
 import type { IUserFormInput } from "@/types/user";
 import { Label } from "@/components/common/form/Label";
 import { TextBox } from "@/components/common/form/TextBox";

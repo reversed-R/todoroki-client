@@ -74,7 +74,7 @@ export function DoitCreateForm({
         </Label>
       )}
 
-      <CheckboxGroup error={errors.labels} label="ラベル">
+      <CheckboxGroup label="ラベル">
         {labels.map((l) => (
           <Checkbox key={l.id} value={l.id} {...register("labels", {})}>
             <LabelBadge label={l} />

@@ -77,7 +77,7 @@ export function LabelCreateForm({
               />
 
               {/* hidden input を置くと form の submit 時に自動で color が含まれる */}
-              <input type="hidden" {...field} />
+              <input type="hidden" {...field} value="" />
             </div>
           )}
         />
