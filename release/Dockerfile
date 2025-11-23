@@ -17,8 +17,6 @@ ENV VITE_FIREBASE_MESSAGING_SENDER_ID=$VITE_FIREBASE_MESSAGING_SENDER_ID
 ENV VITE_FIREBASE_APP_ID=$VITE_FIREBASE_APP_ID
 ENV VITE_API_URL=$VITE_API_URL
 
-ENV NODE_ENV=production
-
 WORKDIR /build
 
 COPY . /build
@@ -29,6 +27,8 @@ RUN \
 
 # runner
 FROM nginx:latest
+
+ENV NODE_ENV=production
 
 COPY --from=builder /build/dist /usr/share/nginx/html
 
