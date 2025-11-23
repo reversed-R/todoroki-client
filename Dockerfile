@@ -28,6 +28,8 @@ RUN \
 # runner
 FROM nginx:latest
 
+ENV NODE_ENV=production
+
 COPY --from=builder /build/dist /usr/share/nginx/html
 
 COPY ./release/nginx/default.conf /etc/nginx/conf.d
