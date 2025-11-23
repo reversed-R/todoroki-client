@@ -6,6 +6,7 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import styles from "@/styles/routes/todos/$todo_id/index.module.scss";
 import { TodoEditButton } from "@/components/todo/TodoEditButton";
 import { TodoScheduleDisplay } from "@/components/todo/TodoScheduleDisplay";
+import dayjs from "dayjs";
 
 export const Route = createFileRoute("/todos/$todo_id/")({
   component: RouteComponent,
@@ -71,7 +72,11 @@ function RouteComponent() {
 
       <section>
         <h3>締め切り</h3>
-        <p>{todo.deadlined_at ? todo.deadlined_at : "なし"}</p>
+        <p>
+          {todo.deadlined_at
+            ? dayjs(todo.deadlined_at).locale("jp").format("YYYY/MM/DD hh:mm")
+            : "なし"}
+        </p>
       </section>
 
       <section>

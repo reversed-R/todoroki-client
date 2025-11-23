@@ -1,5 +1,6 @@
 import type { components } from "@/schema";
 import type { IFormInput } from "./form";
+import type { Dayjs } from "dayjs";
 
 export type Doit = components["schemas"]["DoitResponse"];
 
@@ -12,7 +13,7 @@ export interface IDoitCreateFormInput extends IFormInput {
   alternative_name: string | null;
   description: string;
   is_public: boolean;
-  deadlined_at: Date | null;
+  deadlined_at: Dayjs | null;
   labels: string[];
 }
 
@@ -29,7 +30,7 @@ export function newDoitRequest({
     alternative_name,
     description,
     is_public,
-    deadlined_at: deadlined_at?.toString(),
+    deadlined_at: deadlined_at?.toISOString(),
     labels: labels.map((id) => ({ id })),
   };
 }
@@ -39,7 +40,7 @@ export interface IDoitUpdateFormInput extends IFormInput {
   alternative_name?: string | null;
   description?: string;
   is_public?: boolean;
-  deadlined_at?: Date | null;
+  deadlined_at?: Dayjs | null;
 }
 
 export function newDoitUpdateRequest({
@@ -63,6 +64,6 @@ export function newDoitUpdateRequest({
         : undefined
       : undefined,
     is_public,
-    deadlined_at: deadlined_at?.toString(),
+    deadlined_at: deadlined_at?.toISOString(),
   };
 }

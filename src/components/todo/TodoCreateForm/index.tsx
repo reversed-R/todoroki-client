@@ -1,4 +1,4 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Label } from "@/components/common/form/Label";
 import { TextBox } from "@/components/common/form/TextBox";
 import { Form } from "@/components/common/Form";
@@ -11,6 +11,16 @@ import { Checkbox } from "@/components/common/form/CheckBox";
 import { LabelBadge } from "@/components/label/LabelBadge";
 import { Button } from "@/components/common/Button";
 import { TodoScheduleSelector } from "../TodoScheduleSelector";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 export function TodoCreateForm({
   onSubmit,
@@ -24,6 +34,7 @@ export function TodoCreateForm({
       is_public: false,
       labels: [],
       schedules: [],
+      scheduled_at: null,
     },
     mode: "onChange",
   });
@@ -116,6 +127,24 @@ export function TodoCreateForm({
             remove={remove}
           />
         ))}
+      </Label>
+
+      <Label label="締め切り">
+        <Controller
+          control={form.control}
+          name={"scheduled_at"}
+          render={({ field }) => (
+            <ThemeProvider theme={darkTheme}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="Deadline"
+                  value={field.value || null}
+                  onChange={(v) => field.onChange(v)}
+                />
+              </LocalizationProvider>
+            </ThemeProvider>
+          )}
+        />
       </Label>
     </Form>
   );

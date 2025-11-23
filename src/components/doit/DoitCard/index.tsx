@@ -4,6 +4,7 @@ import type { Doit } from "@/types/doit";
 import { DoitEditButton } from "../DoitEditButton";
 import { DoitDetailButton } from "../DoitDetailButton";
 import { UserRoleGuard } from "@/components/user/UserRoleGuard";
+import dayjs from "dayjs";
 
 export function DoitCard({ doit }: { doit: Doit }) {
   return (
@@ -26,6 +27,11 @@ export function DoitCard({ doit }: { doit: Doit }) {
           <LabelBadge key={l.id} label={l} />
         ))}
       </div>
+      {doit.deadlined_at && (
+        <p className={styles.deadlinedAt}>
+          ~ {dayjs(doit.deadlined_at).locale("jp").format("YYYY/MM/DD hh:mm")}
+        </p>
+      )}
     </section>
   );
 }

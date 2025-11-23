@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Label } from "@/components/common/form/Label";
 import { TextBox } from "@/components/common/form/TextBox";
 import { Form } from "@/components/common/Form";
@@ -9,6 +9,16 @@ import { CheckboxGroup } from "@/components/common/form/CheckBoxGroup";
 import { $api } from "@/lib/openapi";
 import { Checkbox } from "@/components/common/form/CheckBox";
 import { LabelBadge } from "@/components/label/LabelBadge";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 export function DoitCreateForm({
   onSubmit,
@@ -21,6 +31,7 @@ export function DoitCreateForm({
     register,
     handleSubmit,
     formState: { errors },
+    control,
     watch,
   } = useForm<IDoitCreateFormInput>({
     defaultValues: {
@@ -84,6 +95,24 @@ export function DoitCreateForm({
           </Checkbox>
         ))}
       </CheckboxGroup>
+
+      <Label label="締め切り">
+        <Controller
+          control={control}
+          name={"deadlined_at"}
+          render={({ field }) => (
+            <ThemeProvider theme={darkTheme}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="Deadline"
+                  value={field.value || null}
+                  onChange={(v) => field.onChange(v)}
+                />
+              </LocalizationProvider>
+            </ThemeProvider>
+          )}
+        />
+      </Label>
     </Form>
   );
 }

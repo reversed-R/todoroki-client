@@ -15,7 +15,7 @@ export interface ITodoCreateFormInput extends IFormInput {
   alternative_name: string | null;
   description: string;
   is_public: boolean;
-  scheduled_at: Date | null;
+  scheduled_at: Dayjs | null;
   labels: string[];
   schedules: TodoScheduleFormInput[];
 }
@@ -34,7 +34,7 @@ export function newTodoRequest({
     alternative_name,
     description,
     is_public,
-    scheduled_at: scheduled_at?.toString(),
+    scheduled_at: scheduled_at?.toISOString(),
     labels: labels.map((id) => ({ id })),
     schedules: schedules.map(todoScheduleFormInputToRequest),
   };
@@ -45,7 +45,7 @@ export interface ITodoUpdateFormInput extends IFormInput {
   alternative_name?: string | null;
   description?: string;
   is_public?: boolean;
-  scheduled_at?: Date | null;
+  scheduled_at?: Dayjs | null;
 }
 
 export function newTodoUpdateRequest({
@@ -69,7 +69,7 @@ export function newTodoUpdateRequest({
         : undefined
       : undefined,
     is_public,
-    scheduled_at: scheduled_at?.toString(),
+    scheduled_at: scheduled_at?.toISOString(),
   };
 }
 

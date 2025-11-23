@@ -5,6 +5,7 @@ import { TodoProgressButton } from "../TodoProgressButton";
 import { TodoEditButton } from "../TodoEditButton";
 import { TodoDetailButton } from "../TodoDetailButton";
 import { UserRoleGuard } from "@/components/user/UserRoleGuard";
+import dayjs from "dayjs";
 
 export function TodoCard({ todo }: { todo: Todo }) {
   return (
@@ -28,6 +29,11 @@ export function TodoCard({ todo }: { todo: Todo }) {
           <LabelBadge key={l.id} label={l} />
         ))}
       </div>
+      {todo.deadlined_at && (
+        <p className={styles.deadlinedAt}>
+          ~ {dayjs(todo.deadlined_at).locale("jp").format("YYYY/MM/DD hh:mm")}
+        </p>
+      )}
     </section>
   );
 }

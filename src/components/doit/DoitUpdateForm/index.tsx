@@ -1,10 +1,21 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Label } from "@/components/common/form/Label";
 import { TextBox } from "@/components/common/form/TextBox";
 import { Form } from "@/components/common/Form";
 import { ToggleButton } from "@/components/common/form/ToggleButton";
 import { TextArea } from "@/components/common/form/TextArea";
 import type { Doit, IDoitUpdateFormInput } from "@/types/doit";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import dayjs from "dayjs";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 export function DoitUpdateForm({
   doit,
@@ -19,6 +30,7 @@ export function DoitUpdateForm({
     register,
     handleSubmit,
     formState: { errors },
+    control,
     watch,
   } = useForm<IDoitUpdateFormInput>({
     defaultValues: {
@@ -26,6 +38,7 @@ export function DoitUpdateForm({
       description: doit.description,
       is_public: doit.is_public,
       alternative_name: doit.alternative_name,
+      deadlined_at: doit.deadlined_at ? dayjs(doit.deadlined_at) : undefined,
     },
     mode: "onChange",
   });
@@ -67,6 +80,24 @@ export function DoitUpdateForm({
           />
         </Label>
       )}
+
+      <Label label="締め切り">
+        <Controller
+          control={control}
+          name={"deadlined_at"}
+          render={({ field }) => (
+            <ThemeProvider theme={darkTheme}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="Deadline"
+                  value={field.value || null}
+                  onChange={(v) => field.onChange(v)}
+                />
+              </LocalizationProvider>
+            </ThemeProvider>
+          )}
+        />
+      </Label>
     </Form>
   );
 }
