@@ -20,7 +20,10 @@ export function TodoCreateForm({
   onCancel: () => void;
 }) {
   const form = useForm<ITodoCreateFormInput>({
-    defaultValues: {},
+    defaultValues: {
+      labels: [],
+      schedules: [],
+    },
     mode: "onChange",
   });
 
@@ -86,7 +89,7 @@ export function TodoCreateForm({
 
       <CheckboxGroup label="ラベル">
         {labels.map((l) => (
-          <Checkbox key={l.id} value={l.id} {...register("labels", {})}>
+          <Checkbox key={l.id} value={String(l.id)} {...register("labels")}>
             <LabelBadge label={l} />
           </Checkbox>
         ))}

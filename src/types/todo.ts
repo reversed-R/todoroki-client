@@ -88,9 +88,6 @@ export type TodoScheduleFormInput = {
 };
 
 function toRFC3339(datePart: string, time: Dayjs) {
-  console.log("datePart", datePart);
-  console.log("time", time);
-
   const hh = time.hour().toString().padStart(2, "0");
   const mm = time.minute().toString().padStart(2, "0");
   return new Date(`${datePart}T${hh}:${mm}:00Z`).toISOString();
