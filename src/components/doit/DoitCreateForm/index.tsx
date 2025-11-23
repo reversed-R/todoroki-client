@@ -23,7 +23,10 @@ export function DoitCreateForm({
     formState: { errors },
     watch,
   } = useForm<IDoitCreateFormInput>({
-    defaultValues: {},
+    defaultValues: {
+      labels: [],
+      is_public: false,
+    },
     mode: "onChange",
   });
 

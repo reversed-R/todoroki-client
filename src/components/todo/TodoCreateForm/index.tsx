@@ -21,6 +21,7 @@ export function TodoCreateForm({
 }) {
   const form = useForm<ITodoCreateFormInput>({
     defaultValues: {
+      is_public: false,
       labels: [],
       schedules: [],
     },
