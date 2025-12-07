@@ -3,7 +3,7 @@ import { useAuth } from "@/context/auth";
 import { $api } from "@/lib/openapi";
 import { createFileRoute } from "@tanstack/react-router";
 import styles from "@/styles/routes/todos-doits/index.module.scss";
-import { TodoMenuBar } from "@/components/todo/TodoMenuBar";
+// import { TodoMenuBar } from "@/components/todo/TodoMenuBar";
 import { CommonNavigationBar } from "@/components/common/CommonNavigationBar";
 import { DoitCard } from "@/components/doit/DoitCard";
 
@@ -23,11 +23,11 @@ function RouteComponent() {
     .client()
     .useSuspenseQuery("get", "/doits");
 
-  const { data: labels, isError: isLabelError } = $api
-    .client()
-    .useSuspenseQuery("get", "/labels");
+  // const { data: labels, isError: isLabelError } = $api
+  //   .client()
+  //   .useSuspenseQuery("get", "/labels");
 
-  if (isError && isLabelError && isDoitError) {
+  if (isError && isDoitError) {
     return (
       <section>
         <p>データの取得に失敗しました</p>
@@ -39,7 +39,6 @@ function RouteComponent() {
     <>
       <CommonNavigationBar />
       <div className={styles.container}>
-        <TodoMenuBar labels={labels} />
         <div>
           <h2 className={styles.heading}>Todo</h2>
           <div className={styles.gridContainer}>

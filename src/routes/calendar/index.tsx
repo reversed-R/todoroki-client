@@ -10,12 +10,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { $api } from "@/lib/openapi";
 import { CommonNavigationBar } from "@/components/common/CommonNavigationBar";
 import { Icon } from "@iconify/react";
+import { useAuth } from "@/context/auth";
 
 export const Route = createFileRoute("/calendar/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { refreshIfExpired } = useAuth();
+  refreshIfExpired();
+
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs | null>(null);
 

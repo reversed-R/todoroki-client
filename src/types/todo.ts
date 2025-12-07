@@ -1,6 +1,12 @@
 import type { components } from "@/schema";
 import type { IFormInput } from "./form";
 import type { Dayjs } from "dayjs";
+import { z } from "zod";
+
+export const todoSearchSchema = z.object({
+  includes_completed: z.boolean().optional().default(false),
+  includes_scheduled: z.boolean().optional().default(false),
+});
 
 export type Todo = components["schemas"]["TodoResponse"];
 
