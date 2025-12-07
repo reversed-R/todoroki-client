@@ -1,0 +1,42 @@
+@use "@/styles/variables" as var;
+
+.container {
+  padding: 16px;
+  color: var.$primary-color;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.monthLabel {
+  font-weight: bold;
+}
+
+.dailyWrapper {
+  margin-top: 12px;
+}
+
+.backToMonth {
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  background: var.$primary-background;
+  color: var.$primary-color;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid var.$primary-border;
+}
+
+.backToMonth:hover {
+  background: var.$primary-border;
+}
+
+.button {
+  width: 1em;
+  height: 1em;
+  color: var.$primary-color;
+}

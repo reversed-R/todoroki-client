@@ -1,0 +1,42 @@
+@use "@/styles/variables" as var;
+
+.agendaContainer {
+  padding: 16px;
+  background: var.$secondary-background;
+  color: var.$primary-color;
+  border-radius: 8px;
+}
+
+.dateHeader {
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: var.$primary-color;
+}
+
+.eventList {
+}
+
+.scheduleItem {
+  background: var.$primary-background;
+  border-left: 4px solid var.$primary;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.deadlineItem {
+  background: var.$primary-background;
+  border-left: 4px solid var.$color-error;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.listItemInner {
+  color: var.$primary-color;
+}
+
+.noEvents {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var.$primary-color;
+}

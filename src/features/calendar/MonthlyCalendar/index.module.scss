@@ -1,0 +1,66 @@
+@use "@/styles/variables" as var;
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.weekdayHeader {
+  text-align: center;
+  font-weight: bold;
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.dayCell {
+  border-radius: 4px;
+  min-height: 100px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  background: var.$primary-background;
+  transition: background 0.15s ease;
+  color: var.$primary-color;
+
+  &:hover {
+    background: var.$primary-border;
+  }
+}
+
+.dateLabel {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scheduleEvent {
+  font-size: 11px;
+  padding: 2px 4px;
+  background: var.$primary-background;
+  color: var.$primary-color;
+  border-left: 3px solid var.$primary;
+  border-radius: 3px;
+}
+
+.deadlineEvent {
+  font-size: 11px;
+  padding: 2px 4px;
+  background: var.$primary-background;
+  color: var.$primary-color;
+  border-left: 3px solid var.$color-error;
+  border-radius: 3px;
+}
+
+.moreCount {
+  font-size: 11px;
+  margin-top: 4px;
+  color: var.$primary-color;
+}

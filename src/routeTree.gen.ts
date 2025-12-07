@@ -15,6 +15,7 @@ import { Route as TodosDoitsIndexRouteImport } from './routes/todos-doits/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
 import { Route as SigninIndexRouteImport } from './routes/signin/index'
 import { Route as DoitsIndexRouteImport } from './routes/doits/index'
+import { Route as CalendarIndexRouteImport } from './routes/calendar/index'
 import { Route as TodosNewIndexRouteImport } from './routes/todos/new/index'
 import { Route as TodosTodo_idIndexRouteImport } from './routes/todos/$todo_id/index'
 import { Route as LabelsNewIndexRouteImport } from './routes/labels/new/index'
@@ -51,6 +52,11 @@ const SigninIndexRoute = SigninIndexRouteImport.update({
 const DoitsIndexRoute = DoitsIndexRouteImport.update({
   id: '/doits/',
   path: '/doits/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarIndexRoute = CalendarIndexRouteImport.update({
+  id: '/calendar/',
+  path: '/calendar/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TodosNewIndexRoute = TodosNewIndexRouteImport.update({
@@ -91,6 +97,7 @@ const DoitsDoit_idEditIndexRoute = DoitsDoit_idEditIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarIndexRoute
   '/doits': typeof DoitsIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarIndexRoute
   '/doits': typeof DoitsIndexRoute
   '/signin': typeof SigninIndexRoute
   '/signup': typeof SignupIndexRoute
@@ -122,6 +130,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar/': typeof CalendarIndexRoute
   '/doits/': typeof DoitsIndexRoute
   '/signin/': typeof SigninIndexRoute
   '/signup/': typeof SignupIndexRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/calendar'
     | '/doits'
     | '/signin'
     | '/signup'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/calendar'
     | '/doits'
     | '/signin'
     | '/signup'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/calendar/'
     | '/doits/'
     | '/signin/'
     | '/signup/'
@@ -185,6 +197,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarIndexRoute: typeof CalendarIndexRoute
   DoitsIndexRoute: typeof DoitsIndexRoute
   SigninIndexRoute: typeof SigninIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
@@ -243,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DoitsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calendar/': {
+      id: '/calendar/'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/todos/new/': {
       id: '/todos/new/'
       path: '/todos/new'
@@ -297,6 +317,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarIndexRoute: CalendarIndexRoute,
   DoitsIndexRoute: DoitsIndexRoute,
   SigninIndexRoute: SigninIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
