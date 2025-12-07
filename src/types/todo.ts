@@ -96,7 +96,7 @@ export type TodoScheduleFormInput = {
 function toRFC3339(datePart: string, time: Dayjs) {
   const hh = time.hour().toString().padStart(2, "0");
   const mm = time.minute().toString().padStart(2, "0");
-  return new Date(`${datePart}T${hh}:${mm}:00Z`).toISOString();
+  return new Date(`${datePart}T${hh}:${mm}:00+09:00`).toISOString();
 }
 
 type TodoScheduleRequest = components["schemas"]["TodoScheduleRequest"];
