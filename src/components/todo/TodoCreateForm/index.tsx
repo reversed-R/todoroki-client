@@ -35,6 +35,7 @@ export function TodoCreateForm({
       labels: [],
       schedules: [],
       scheduled_at: null,
+      description: "",
     },
     mode: "onChange",
   });

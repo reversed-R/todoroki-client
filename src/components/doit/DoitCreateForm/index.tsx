@@ -37,6 +37,7 @@ export function DoitCreateForm({
     defaultValues: {
       labels: [],
       is_public: false,
+      description: "",
     },
     mode: "onChange",
   });
